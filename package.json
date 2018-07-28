@@ -1,0 +1,27 @@
+{
+  "name": "hostigniter",
+  "version": "1.0.0",
+  "description": "A Host file manager tool for developers",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hostigniter/hostigniter.git"
+  },
+  "keywords": [
+    "host",
+    "file",
+    "electron"
+  ],
+  "author": "arielhr1987",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/hostigniter/hostigniter/issues"
+  },
+  "homepage": "https://hostigniter.github.io",
+  "devDependencies": {
+    "electron": "^2.0.0"
+  }
+}
