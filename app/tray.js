@@ -1,6 +1,8 @@
+"use strict";
+
 const {Tray, Menu} = require('electron');
 
-class HiTray extends Tray {
+module.exports = class extends Tray {
 
     //icon = '';
     constructor(path) {
@@ -33,5 +35,3 @@ class HiTray extends Tray {
     }
 
 }
-
-export default HiTray

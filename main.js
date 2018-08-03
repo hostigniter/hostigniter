@@ -1,12 +1,11 @@
 // Modules to control application life and create native browser window
 const path = require('path');
 const {app} = require('electron');
-require('./app/tray');
+const Tray = require('./app/tray');
 
 
 const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
-const iconPath = path.join(__dirname, '..', iconName);
-
+const iconPath = path.join(__dirname, iconName);
 
 
 //const {hostigniter} = require(path.join(APP_FOLDER_PATH, 'app'));
@@ -15,7 +14,8 @@ const iconPath = path.join(__dirname, '..', iconName);
 app.dock.hide();
 
 app.on('ready', () => {
-    new HiTray(iconPath);
+    let tray = new Tray(iconPath);
+
 });
 
 
