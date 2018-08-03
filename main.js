@@ -1,45 +1,21 @@
 // Modules to control application life and create native browser window
 const path = require('path');
-const APP_FOLDER_PATH = path.join(__dirname, 'app/');
-const {hostigniter} = require(path.join(APP_FOLDER_PATH, 'app'));
+const {app} = require('electron');
+require('./app/tray');
+
+
+const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
+const iconPath = path.join(__dirname, '..', iconName);
+
+
+
+//const {hostigniter} = require(path.join(APP_FOLDER_PATH, 'app'));
 
 //don't show app in dock
 app.dock.hide();
 
 app.on('ready', () => {
-    const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png'
-    const iconPath = path.join(__dirname, iconName)
-
-    appTray = new Tray(iconPath);
-    const contextMenu = Menu.buildFromTemplate([
-        {
-            label: 'Item1',
-            type: 'radio',
-            checked: true
-        },
-        {
-            label: 'Item2',
-            type: 'radio'
-        }, {
-            type: 'separator'
-        }, {
-            type: 'normal',
-            label: 'Preferences',
-            description: 'Show preferences.'
-        }
-    ]);
-
-    // Make a change to the context menu
-    //contextMenu.items[1].checked = false;
-
-    // Call this again for Linux because we modified the context menu
-    appTray.setContextMenu(contextMenu);
-
-    //
-    appTray.setTitle("Title");
-
-    // Tooltip
-    appTray.setToolTip('Hostigniter');
+    new HiTray(iconPath);
 });
 
 

@@ -12,4 +12,4 @@ class App {
     }
 }
 
-exports.hostigniter = new App();
+export default App;
