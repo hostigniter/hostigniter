@@ -1,7 +1,9 @@
+'use strict';
+
 // Modules to control application life and create native browser window
 const path = require('path');
 const {app} = require('electron');
-const Tray = require('./app/tray');
+const Tray = require('./tray');
 
 
 const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
@@ -14,8 +16,8 @@ const iconPath = path.join(__dirname, iconName);
 app.dock.hide();
 
 app.on('ready', () => {
-    let tray = new Tray(iconPath);
-
+    let tray = new Tray();
+    tray.updateHosts([]);
 });
 
 

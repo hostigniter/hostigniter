@@ -1,3 +1,5 @@
+'use strict';
+
 const {app, BrowserWindow, Menu, Tray} = require('electron');
 
 class App {
@@ -7,7 +9,7 @@ class App {
         console.log('constructor called.');
     }
 
-    boot(){
+    boot() {
         console.log('boot.');
     }
 }
