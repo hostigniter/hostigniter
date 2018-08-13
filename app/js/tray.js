@@ -1,14 +1,13 @@
 'use strict';
 
 const {Tray, Menu} = require('electron');
-const path = require('path');
 const config = require('./config');
 
-module.exports = class extends Tray {
+module.exports = new (class extends Tray {
 
     /**
      * Constructor for the class
-     * @param path
+     * @param {String} path
      */
     constructor(path = false) {
         if (path === false) {
@@ -16,33 +15,17 @@ module.exports = class extends Tray {
         }
         super(path);
 
-
-        this.setTitle("Title");
-
+        //Set tooltip for the tray icon
         this.setToolTip('Hostigniter');
 
+        //Create the context menu
         this.contextMenu = this._createMenu();
         this.setContextMenu(this.contextMenu);
-
-
-    }
-
-    /**
-     * Update hosts
-     * @param {Array} hosts
-     */
-    updateHosts(hosts) {
-        //this.contextMenu.items.splice(0, 1);
-        this.contextMenu.items[0].enabled = false;
-        this.contextMenu.
-        this.setContextMenu(this.contextMenu);
-        //this.contextMenu.
-
     }
 
     /**
      * Activate a host
-     * @param host
+     * @param {Array} host
      */
     activateHost(host) {
         //Activate the selected host file
@@ -51,28 +34,66 @@ module.exports = class extends Tray {
     }
 
     /**
+     * Update hosts from host manager
+     * @param {Array} hosts
+     */
+    updateHosts(hosts) {
+        //
+        this.contextMenu.items[0].enabled = false;
+        this.contextMenu.this.setContextMenu(this.contextMenu);
+        //this.contextMenu.
+
+    }
+
+    /**
      * Create the context menu for the Tray
+     * @param {Array} hosts Array containing the host names to include in the tray menu
      * @returns {Electron.Menu}
      * @private
      */
-    _createMenu() {
-        return Menu.buildFromTemplate([
-            {
-                id: 'host-1',
-                label: 'Host 1',
+    _createMenu(hosts = []) {
+        let template = [];
+
+        //Hosts menu items
+        hosts.forEach(function (value, index) {
+            template.push({
+                //id: '',
                 type: 'radio',
-                checked: true
-            },
-            {
-                label: 'Host 2',
-                type: 'radio'
-            }, {
-                type: 'separator'
-            }, {
-                type: 'normal',
-                label: 'Preferences',
-                description: 'Show preferences.'
+                label: value,
+                sublabel: value,
+                click: (menuItem, browserWindow, event) => {
+                    //this.setTitle(menuItem.label);
+                    console.log(menuItem.label);
+                }
+            });
+        });
+
+        //Default menu items
+        template = template.concat([{
+            type: 'separator'
+        }, {
+            type: 'normal',
+            label: 'Preferences',
+            description: 'Show preferences.'
+        }, {
+            type: 'normal',
+            label: 'About',
+            description: 'Hostigniter about page.',
+            click() {
+                require('electron').shell.openExternal('https://hostigniter.github.io/')
             }
-        ]);
+        }, {
+            type: 'separator'
+        }, {
+            type: 'normal',
+            label: 'Quit',
+            description: 'Quit Hostigniter.',
+            click() {
+                require('electron').app.quit();
+            }
+        }]);
+
+        //Build Menu from template
+        return Menu.buildFromTemplate(template);
     }
-}
+})()

@@ -3,21 +3,17 @@
 // Modules to control application life and create native browser window
 const path = require('path');
 const {app} = require('electron');
-const Tray = require('./tray');
-
+const hostigniter =require('./app');
 
 const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
 const iconPath = path.join(__dirname, iconName);
 
 
-//const {hostigniter} = require(path.join(APP_FOLDER_PATH, 'app'));
-
-//don't show app in dock
+//don't show app in dock (MacOS only)
 app.dock.hide();
 
 app.on('ready', () => {
-    let tray = new Tray();
-    tray.updateHosts([]);
+    hostigniter.boot();
 });
 
 
