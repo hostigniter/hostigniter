@@ -1,8 +1,9 @@
 'use strict';
 
 const {app, BrowserWindow} = require('electron');
+const manager = require('./manager');
 
-module.exports = new (class {
+module.exports = new class {
 
     constructor() {
 
@@ -13,7 +14,7 @@ module.exports = new (class {
 
     boot() {
         //We need to wait for the app to be ready in order to create the Tray
-        this.tray = require('./tray');
+        require('./tray');
         console.log('boot.');
     }
-})()
+}()

@@ -10,7 +10,7 @@ const iconPath = path.join(__dirname, iconName);
 
 
 //don't show app in dock (MacOS only)
-app.dock.hide();
+//app.dock.hide();
 
 app.on('ready', () => {
     hostigniter.boot();

@@ -2,8 +2,9 @@
 
 const {Tray, Menu} = require('electron');
 const config = require('./config');
+//const manager = require('./manager');
 
-module.exports = new (class extends Tray {
+module.exports = new class extends Tray {
 
     /**
      * Constructor for the class
@@ -16,7 +17,7 @@ module.exports = new (class extends Tray {
         super(path);
 
         //Set tooltip for the tray icon
-        this.setToolTip('Hostigniter');
+        this.setToolTip(config.NAME);
 
         //Create the context menu
         this.contextMenu = this._createMenu();
@@ -61,10 +62,10 @@ module.exports = new (class extends Tray {
                 type: 'radio',
                 label: value,
                 sublabel: value,
-                click: (menuItem, browserWindow, event) => {
-                    //this.setTitle(menuItem.label);
+                click: ((menuItem, browserWindow, event) => {
+                    this.setTitle(menuItem.label);
                     console.log(menuItem.label);
-                }
+                }).bind(this)
             });
         });
 
@@ -96,4 +97,4 @@ module.exports = new (class extends Tray {
         //Build Menu from template
         return Menu.buildFromTemplate(template);
     }
-})()
+}()
