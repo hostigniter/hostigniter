@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const util = require('util');
+const uid = require('uid');
 const {WORKSPACE, HOSTS, SYSTEM_HOST} = require('./config');
 
 module.exports = new class Manager {
@@ -12,10 +12,12 @@ module.exports = new class Manager {
     constructor() {
         //this.init();
         this.json = this.init();
-        //const {hosts} = this.instance();
-        const t = 0;
     }
 
+    /**
+     *
+     * @return {Object}
+     */
     init() {
         if (!fs.existsSync(WORKSPACE)) {
             //directory does not exist, lets create it
@@ -36,63 +38,53 @@ module.exports = new class Manager {
         } catch (e) {
             //the file does not exist or has an invalid format
             json = this.getDefaultJson();
-            fs.writeFileSync(HOSTS, JSON.stringify(json), 'utf8')
+            this.save(json);
         }
         return json
     }
 
     /**
      *
+     * @param name
+     * @return {Object}
      */
-    static instance() {
+    getHost(name) {
+        return this.json.hosts.find(item => item.name === name);
 
-        if (!fs.existsSync(WORKSPACE)) {
-            //directory does not exist, lets create it
-            fs.mkdirSync(WORKSPACE);
-        }
-
-        return util.promisify(fs.readFile)(HOSTS, 'utf8').then((text) => {
-            try {
-                return Promise.resolve(JSON.parse(text));
-            } catch (e) {
-                return Promise.resolve({});
-            }
-        }).catch(() => {
-            //error while reading file, lets return empty json
-            return Promise.resolve({});
-        }).then((json) => {
-            //get the hosts section
-            const {hosts} = json;
-
-            const manager = new Manager(json);
-
-            if (Array.isArray(hosts)) {
-                // const hostsPromises = hosts.map((item) => {
-                //     const __hosts = new Hosts(item);
-                //     hostsMap.set(__hosts.uid, __hosts);
-                //     return __hosts.load();
-                // });
-                // return Promise.all(hostsPromises).then(() => {
-                //     manifest.hosts = hostsMap;
-                //     return Promise.resolve(manifest);
-                // });
-            } else {
-                //first time we run the app
-                return manager.getDefaultJson().then((json) => {
-                    manager.save(json);
-                    return Promise.resolve(manager);
-                });
-            }
-        });
     }
 
     /**
      *
-     * @param id
+     * @param name
+     * @return {number}
+     */
+    getHostIndex(name) {
+        return this.json.hosts.findIndex(item => item.name === name);
+    }
+
+    /**
+     *
+     * @param name
+     * @return {number}
+     */
+    getActiveHost(name) {
+        return this.json.hosts.findIndex(item => item.active === true);
+    }
+
+    /**
+     *
+     * @return {Array}
+     */
+    getAllHost() {
+        return this.json.hosts;
+    }
+
+    /**
+     *
      * @param name
      * @param content
      */
-    addHost(id, name, content) {
+    addHost(name, content) {
         this.json.hosts.push({
             active: false,
             name: name,
@@ -100,20 +92,47 @@ module.exports = new class Manager {
         })
     }
 
-    renameHost() {
+    /**
+     *
+     * @param name
+     * @param newName
+     * @return {{active, name, content}|*}
+     */
+    renameHost(name, newName) {
+        let index = this.json.hosts.findIndex(item => item.name === name);
+        if (index) {
+            this.json.hosts[index].name = name;
+        }
+        return this.json.hosts[index];
+    }
+
+    /**
+     *
+     * @param name
+     */
+    updateHost(name) {
 
     }
 
-    updateHost() {
-
+    /**
+     *
+     * @param name
+     */
+    activateHost(name) {
+        let activeIndex = this.json.hosts.findIndex(item => item.active === true);
+        this.json.hosts[activeIndex].active = false;
+        let newIndex = this.json.hosts.findIndex(item => item.name === name);
+        this.json.hosts[newIndex].active = true;
+        this.save();
     }
 
-    activateHost() {
-
-    }
-
-    deleteHost() {
-
+    /**
+     *
+     * @param name
+     */
+    deleteHost(name) {
+        delete this.json.hosts[this.getHostIndex(name)];
+        this.save();
     }
 
     /**
@@ -125,7 +144,7 @@ module.exports = new class Manager {
         if (json === null) {
             json = this.json
         }
-        fs.writeFile(HOSTS, JSON.stringify(this.json), 'utf8');
+        fs.writeFile(HOSTS, JSON.stringify(json), 'utf8');
     }
 
     /**

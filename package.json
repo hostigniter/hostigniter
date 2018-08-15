@@ -1,5 +1,5 @@
 {
-  "name": "hostigniter",
+  "name": "Hostigniter",
   "version": "1.0.0",
   "description": "A Host file manager tool for developers",
   "main": "app/js/main.js",
@@ -23,5 +23,8 @@
   "homepage": "https://hostigniter.github.io",
   "devDependencies": {
     "electron": "^2.0.0"
+  },
+  "dependencies": {
+    "uid": "0.0.2"
   }
 }

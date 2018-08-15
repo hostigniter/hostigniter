@@ -3,7 +3,7 @@
 const {app, BrowserWindow} = require('electron');
 const manager = require('./manager');
 
-module.exports = new class {
+module.exports = new class App {
 
     constructor() {
 
@@ -12,9 +12,11 @@ module.exports = new class {
         console.log('constructor called.');
     }
 
-    boot() {
+    init() {
         //We need to wait for the app to be ready in order to create the Tray
         require('./tray');
-        console.log('boot.');
+        console.log('app init.');
     }
+
+
 }()

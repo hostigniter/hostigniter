@@ -2,7 +2,7 @@
 
 const {Tray, Menu} = require('electron');
 const config = require('./config');
-//const manager = require('./manager');
+const manager = require('./manager');
 
 module.exports = new class extends Tray {
 
@@ -53,15 +53,18 @@ module.exports = new class extends Tray {
      * @private
      */
     _createMenu(hosts = []) {
+        hosts = manager.getAllHost();
+
         let template = [];
 
         //Hosts menu items
-        hosts.forEach(function (value, index) {
+        hosts.forEach((host, index) => {
             template.push({
                 //id: '',
                 type: 'radio',
-                label: value,
-                sublabel: value,
+                label: host.name,
+                //sublabel: value,
+                checked: host.active,
                 click: ((menuItem, browserWindow, event) => {
                     this.setTitle(menuItem.label);
                     console.log(menuItem.label);
