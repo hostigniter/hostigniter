@@ -8,6 +8,10 @@ module.exports = new class UI extends BrowserWindow {
         super(UI.getDefaultOptions())
     }
 
+    /**
+     *
+     * @return {{center: boolean, minWidth: number, skipTaskbar: boolean, title: (string|*), icon: *, acceptFirstMouse: boolean}}
+     */
     static getDefaultOptions() {
         return {
             center: true,
@@ -21,4 +25,9 @@ module.exports = new class UI extends BrowserWindow {
             acceptFirstMouse: false, //Whether the web view accepts a single mouse-down event that simultaneously activates the window
         }
     }
+
+    showSettings() {
+
+    }
+
 }
