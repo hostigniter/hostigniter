@@ -90,7 +90,7 @@ module.exports = new class extends Tray {
             type: 'separator'
         }, {
             type: 'normal',
-            label: 'Quit',
+            label: 'Quit Hostigniter',
             description: 'Quit Hostigniter.',
             click() {
                 require('electron').app.quit();
