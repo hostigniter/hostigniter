@@ -77,14 +77,24 @@ module.exports = new class extends Tray {
             type: 'separator'
         }, {
             type: 'normal',
+            label: 'Show Editor',
+            description: 'Show host editor window.',
+            click() {
+                require('./window').showMainWindow();
+            }
+        }, {
+            type: 'normal',
             label: 'Preferences',
-            description: 'Show preferences.'
+            description: 'Show preferences.',
+            click() {
+                require('./window').showSettingsWindow();
+            }
         }, {
             type: 'normal',
             label: 'About',
             description: 'Hostigniter about page.',
             click() {
-                require('electron').shell.openExternal('https://hostigniter.github.io/')
+                require('electron').shell.openExternal(config.HOMEPAGE)
             }
         }, {
             type: 'separator'
@@ -93,6 +103,7 @@ module.exports = new class extends Tray {
             label: 'Quit Hostigniter',
             description: 'Quit Hostigniter.',
             click() {
+                require('electron').app.isQuiting = true;
                 require('electron').app.quit();
             }
         }]);
@@ -100,4 +111,4 @@ module.exports = new class extends Tray {
         //Build Menu from template
         return Menu.buildFromTemplate(template);
     }
-}()
+}();

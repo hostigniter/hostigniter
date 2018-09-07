@@ -18,5 +18,4 @@ module.exports = new class App {
         console.log('app init.');
     }
 
-
 }()

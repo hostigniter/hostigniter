@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hostgniter</title>
+</head>
+<body>
+<h1>Main window</h1>
+<button onclick="process.crash()"> Hang</button>
+
+<script>
+    const manager = require('electron').remote.require('./manager'); // manager
+
+    var node = document.createElement("div");
+    var textnode = document.createTextNode('Host total:' + manager.getAllHost().length);
+    node.appendChild(textnode);
+    document.body.appendChild(node);
+    manager.getAllHost()
+</script>
+</body>
+</html>

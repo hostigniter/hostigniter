@@ -12,6 +12,7 @@ const RELEASES_URL = 'https://hostigniter.github.io/releases';
 //App config options
 const APP_PATH = path.join(__dirname, '..');
 const APP_ASSETS = path.join(APP_PATH, 'assets');
+const APP_HTML = path.join(APP_PATH, 'html');
 const APP_ICON = path.join(APP_ASSETS, 'images', process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png');
 
 //OS config options
@@ -29,6 +30,7 @@ module.exports = {
     RELEASES_URL: RELEASES_URL,
     APP_PATH: APP_PATH,
     APP_ASSETS: APP_ASSETS,
+    APP_HTML: APP_HTML,
     APP_ICON: APP_ICON,
     USER_HOME: USER_HOME,
     WORKSPACE: WORKSPACE,
