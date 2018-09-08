@@ -3,19 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Hostgniter</title>
+    <link rel="stylesheet" type="text/css" href="./../assets/css/style.css">
+
 </head>
 <body>
-<h1>Main window</h1>
-<button onclick="process.crash()"> Hang</button>
+<nav class="nav">
+    <header class="nav-header">
+        <h1 class="nav-title">Host<strong>Igniter</strong></h1>
+    </header>
+    <div class="nav-item u-category-windows">
+        <h5 class="nav-category">
+            <svg class="nav-icon">
+                <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/img/icons.svg#icon-windows"></use>-->
+            </svg>
+            Windows
+        </h5>
+        <button type="button" id="button-windows" data-section="windows" class="nav-button"><em>Default</em></button>
+        <button type="button" id="button-crash-hang" data-section="crash-hang" class="nav-button"><em>Default 2</em></button>
+    </div>
+    
+</nav>
+<main class="content">
 
+    <h1>Main window</h1>
+</main>
 <script>
-    const manager = require('electron').remote.require('./manager'); // manager
-
-    var node = document.createElement("div");
-    var textnode = document.createTextNode('Host total:' + manager.getAllHost().length);
-    node.appendChild(textnode);
-    document.body.appendChild(node);
-    manager.getAllHost()
+    // const manager = require('electron').remote.require('./manager'); // manager
+    //
+    // var node = document.createElement("div");
+    // var textnode = document.createTextNode('Host total:' + manager.getAllHost().length);
+    // node.appendChild(textnode);
+    // document.body.appendChild(node);
+    // manager.getAllHost()
 </script>
 </body>
 </html>

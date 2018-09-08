@@ -12,7 +12,9 @@ module.exports = new class Window extends BrowserWindow {
         this.on('minimize', this.onMinimize);
         this.on('close', this.onClose);
         this.on('unresponsive', this.onUnresponsive);
+        this.on('ready-to-show', this.onReadyToShow);
         this.webContents.on('crashed', this.onCrashed);
+        this.webContents.on('did-finish-load', this.onDidFinishLoad);
     }
 
     /**
@@ -22,6 +24,7 @@ module.exports = new class Window extends BrowserWindow {
     static getDefaultOptions() {
         return {
             center: true,
+            show: false,
             // minHeight: 200,
             // maxHeight: 300,
             minWidth: 200,
@@ -43,7 +46,8 @@ module.exports = new class Window extends BrowserWindow {
             pathname: path.join(APP_HTML, 'main.html')
         });
         this.loadURL(filePath);
-        this.show();
+        //this.show();
+        //this.focus();
     }
 
     /**
@@ -56,7 +60,7 @@ module.exports = new class Window extends BrowserWindow {
             pathname: path.join(APP_HTML, 'settings.html')
         });
         this.loadURL(filePath);
-        this.show();
+        //this.show();
     }
 
     /**
@@ -64,7 +68,7 @@ module.exports = new class Window extends BrowserWindow {
      * @param event
      */
     onMinimize(event) {
-        event.preventDefault();
+        //event.preventDefault();
         this.hide();
     }
 
@@ -82,7 +86,7 @@ module.exports = new class Window extends BrowserWindow {
     }
 
     /**
-     * Window crashed event
+     * Window crashed event. Logic to relaunch window if renderer process finish
      */
     onCrashed() {
         const options = {
@@ -93,13 +97,12 @@ module.exports = new class Window extends BrowserWindow {
         };
 
         require('electron').dialog.showMessageBox(options, (index) => {
-            if (index === 0) require('./window').reload()
-            else require('./window').close()
+            (index === 0) ? require('./window').reload() : require('./window').close();
         })
     }
 
     /**
-     * Renderer Process Hanging
+     * Renderer Process Hanging. Logic to relaunch window if renderer process finish
      */
     onUnresponsive() {
         const options = {
@@ -110,9 +113,25 @@ module.exports = new class Window extends BrowserWindow {
         }
 
         require('electron').dialog.showMessageBox(options, (index) => {
-            if (index === 0) require('./window').reload()
-            else require('./window').close()
+            (index === 0) ? require('./window').reload() : require('./window').close();
         })
+    }
+
+    /**
+     *
+     */
+    onReadyToShow() {
+        //this.show();
+        //this.focus();
+        //alert('ready to show')
+    }
+
+    /**
+     * Fired after web content finish to load. At this moment we show the window to avoid "flash" content
+     */
+    onDidFinishLoad() {
+        require('./window').show();
+        require('./window').focus();
     }
 
 }
