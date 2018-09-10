@@ -144,7 +144,10 @@ module.exports = new class Manager {
         if (json === null) {
             json = this.json
         }
-        fs.writeFile(HOSTS, JSON.stringify(json), 'utf8');
+        fs.writeFile(HOSTS, JSON.stringify(json), 'utf8', (err) => {
+            if (err) throw err;
+            console.log('HOSTS file saved');
+        });
     }
 
     /**

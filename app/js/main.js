@@ -8,9 +8,10 @@ const hostigniter = require('./app');
 const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
 const iconPath = path.join(__dirname, iconName);
 
-
-//don't show app in dock (MacOS only)
-app.dock.hide();
+if(process.platform === "darwin") {
+    //don't show app in dock (MacOS only)
+    app.dock.hide();
+}
 
 app.on('ready', () => {
     hostigniter.init();
