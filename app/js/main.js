@@ -17,7 +17,7 @@ app.on('ready', () => {
     hostigniter.init();
 });
 
-
+// de3a2d9192a5c0d6a4590e4744b1b151bb448deb
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 // let mainWindow;
