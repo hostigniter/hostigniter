@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Hostgniter</title>
     <link rel="stylesheet" type="text/css" href="./../assets/css/style.css">
-
+    <link rel="stylesheet" type="text/css" href="./../../node_modules/codemirror/lib/codemirror.css">
+    <script src="./../../node_modules/codemirror/lib/codemirror.js"></script>
 </head>
 <body>
 <nav class="nav">
@@ -19,13 +20,13 @@
             Windows
         </h5>
         <button type="button" id="button-windows" data-section="windows" class="nav-button"><em>Default</em></button>
-        <button type="button" id="button-crash-hang" data-section="crash-hang" class="nav-button"><em>Default 2</em></button>
+        <button type="button" id="button-crash-hang" data-section="crash-hang" class="nav-button"><em>Default 2</em>
+        </button>
     </div>
-    
+
 </nav>
 <main class="content">
-
-    <h1>Main window</h1>
+    <textarea id="editor" title=""></textarea>
 </main>
 <script>
     // const manager = require('electron').remote.require('./manager'); // manager
@@ -36,5 +37,7 @@
     // document.body.appendChild(node);
     // manager.getAllHost()
 </script>
+
+<script src="./../js/renderer.js"></script>
 </body>
 </html>

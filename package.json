@@ -25,6 +25,7 @@
     "electron": "^2.0.0"
   },
   "dependencies": {
+    "codemirror": "^5.40.0",
     "uid": "0.0.2"
   }
 }
